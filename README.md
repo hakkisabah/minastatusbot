@@ -38,7 +38,7 @@ CHAT_ID="YOUR_TELEGRAM_CHAT_ID"
 
 cd ~ && \
 curl -s https://raw.githubusercontent.com/hakkisabah/minastatusbot/main/checkMinaBP.sh | \
-sed "s/YOUR_TOKEN_HERE/$TG_TOKEN/g; s/YOUR_CHAT_ID_HERE/$CHAT_ID/g" > checkMinaBP.sh && \
+sed "s/YOUR_TELEGRAM_BOT_TOKEN/$TG_TOKEN/g; s/YOUR_TELEGRAM_CHAT_ID/$CHAT_ID/g" > checkMinaBP.sh && \
 chmod +x checkMinaBP.sh && \
 (crontab -l 2>/dev/null; echo "*/5 * * * * $PWD/checkMinaBP.sh") | crontab -
 ```
