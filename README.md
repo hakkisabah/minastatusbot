@@ -1,3 +1,8 @@
+# NOTE
+This repository is forked from [kadiralan/NodeNurseBot](https://github.com/kadiralan/NodeNurseBot)
+
+Also I have added some extra features to the original repository. This repository working differently from the original one. It is not sending a message every 5 minutes. It is sending a message when the node is down or catchup etc.. Also, it is sending a message when the node is not synced.
+
 ## 🚀 Introduction
 This repository allows you to create your infrastructure to monitor the health of your mina node completely free of charge, without the need for expensive monitoring tools, with a few very simple steps.
 
@@ -18,28 +23,28 @@ This repository allows you to create your infrastructure to monitor the health o
 6. Add your previously created bot to the channel as an administrator. Make sure to grant it the necessary permissions, especially 'Send Messages'.
 
 ### 3️⃣ Finding the Chat ID of the Channel
-1. Send a message in the channel.
+1. Send a message in the channel(its important to following steps).
 2. Open a browser and visit the following URL (replace YOUR_TOKEN_HERE with the bot token you got from BotFather): https://api.telegram.org/botYOUR_TOKEN_HERE/getUpdates
 It should looks like this; https://api.telegram.org/bot110201543:AAHdqTcvCH1vGWJxfSeofSAs0K5PALDsaw/getUpdates
 4. Look for the "chat" object in the returned JSON. The id field inside this object is your channel's chat ID. It should look something like -1001234567890. Save this ID for later.
 
 ### 4️⃣ Setting Up the Cron Job
-1. Just run the below code on your terminal that you run the mina node using Token and ChatId that you got from the previous steps.
+1. First of all define your TG_TOKEN and CHAT_ID in the below command.
+2. And then run the below command.
 
 ```bash
-TOKEN="your-token"
-CHAT_ID="your-chat-id"
+TG_TOKEN="YOUR_TELEGRAM_BOT_TOKEN"
+CHAT_ID="YOUR_TELEGRAM_CHAT_ID"
 
 cd ~ && \
-curl -s https://raw.githubusercontent.com/kadiralan/NodeNurseBot/main/cronjob.sh | \
-sed "s/YOUR_TOKEN_HERE/$TOKEN/g; s/YOUR_CHAT_ID_HERE/$CHAT_ID/g" > cronjob.sh && \
-chmod +x cronjob.sh && \
-(crontab -l 2>/dev/null; echo "*/5 * * * * $PWD/cronjob.sh") | crontab -
+curl -s https://raw.githubusercontent.com/hakkisabah/minastatusbot/main/checkMinaBP.sh | \
+sed "s/YOUR_TOKEN_HERE/$TG_TOKEN/g; s/YOUR_CHAT_ID_HERE/$CHAT_ID/g" > checkMinaBP.sh && \
+chmod +x checkMinaBP.sh && \
+(crontab -l 2>/dev/null; echo "*/5 * * * * $PWD/checkMinaBP.sh") | crontab -
 ```
 
 
 ### 5️⃣ Test & Monitor
-1. Wait for the next 5-minute interval and monitor your Telegram channel to see if the logs are being sent.
-2. If there are any issues, double-check the crontab command, the token, and the chat ID.
+You should to restart your node to see the first message.
 
 Enjoy keeping track of your Node's health using your Telegram app 🥂
